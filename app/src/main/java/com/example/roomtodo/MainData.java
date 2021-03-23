@@ -12,6 +12,7 @@ public class MainData implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int ID;
 
+    //（ア）@ColumnInfoは列に該当
     @ColumnInfo(name = "text")
     private String text;
 

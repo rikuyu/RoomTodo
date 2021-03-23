@@ -39,15 +39,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MainData data = dataList.get(position);
-        database = RoomDB.getInstance(context);
         holder.textView.setText(data.getText());
+
+        database = RoomDB.getInstance(context);
 
         holder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainData d = dataList.get(holder.getAdapterPosition());
-                int sID = d.getID();
-                String sText = d.getText();
+                MainData oneData = dataList.get(holder.getAdapterPosition());
+                String sText = oneData.getText();
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.dialog_update);
 
@@ -66,6 +66,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        int sID = oneData.getID();
                         String uText = editText.getText().toString().trim();
                         database.mainDao().update(sID, uText);
                         dataList.clear();
@@ -79,8 +80,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainData d = dataList.get(holder.getAdapterPosition());
-                database.mainDao().delete(d);
+                MainData oneData = dataList.get(holder.getAdapterPosition());
+                database.mainDao().delete(oneData);
                 int position = holder.getAdapterPosition();
                 dataList.remove(position);
                 notifyItemRemoved(position);

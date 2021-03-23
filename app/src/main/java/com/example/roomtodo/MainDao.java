@@ -10,6 +10,7 @@ import java.util.List;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
+// @Daoはインターフェース
 @Dao
 public interface MainDao {
 
@@ -27,5 +28,8 @@ public interface MainDao {
 
     @Query("SELECT * FROM table_name")
     List<MainData> getAll();
+
+    @Query("SELECT * from table_name WHERE text LIKE '%' || :searchQuery || '%'")
+    List<MainData> search(String searchQuery);
 
 }
